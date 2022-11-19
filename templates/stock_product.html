@@ -1,0 +1,120 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+
+ {% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+
+
+<body id="body" class="dark-sidebar">
+
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+
+
+            
+        <br>
+        <br>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">UPLOAD EXCEL FILE</button>
+
+<br>
+<br>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Stock Name: <span class="text-capitalize text-primary"> {{stock.stock_name}}</span></h5>
+                        
+                        {% if messages %}
+                        
+                        {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                            
+                        {% endif %}
+                        
+                        <div class="card">
+                            
+                            <div class="card-header">
+                                <h4 class="card-title">Medicines In Stock</h4>
+                            </div><!--end card-header-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="datatable_2">
+                                        <thead class="thead-light">
+                                          <tr>
+                                            <th>Medicine Name</th>
+                                            <th>Quantity</th>
+                                            <th>Buying Price</th>
+                                            <th>Manufacture Date</th>
+                                            <th >Expire Date</th>
+                                            
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for medicine in stock_products %}
+                                            <tr>
+                                                <td>{{medicine.medicine.medicine_name}}</td>
+                                                <td>{{medicine.quantity}}</td>
+                                                <td>{{medicine.medicine.buying_price| intcomma}} Tsh</td>
+                                                <td>{{medicine.manufacture_date}}</td>
+                                                <td>{{medicine.expire_date}}</td>
+                                               
+                                            </tr>
+                                            
+                                            {% endfor %}                                                                      
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-de-primary csv">Export CSV</button>
+                                    <button type="button" class="btn btn-sm btn-de-primary txt">Export TXT</button>
+                                   {% comment %}  <button type="button" class="btn btn-sm btn-de-primary sql">Export SQL</button>
+                
+                                    <button type="button" class="btn btn-sm btn-de-primary json">Export JSON</button>
+                                 {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+
+    </div>
+    <!-- end page-wrapper -->
+
+
+
+
+
+    <div class="modal fade" id="exampleModalPrimary" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Upload Exel File Here</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" name="myfile" class="form-control" id="">
+                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button type="submit" class="btn btn-primary"> UPLOAD EXEL</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+    {% endblock %}
+
+

@@ -1,0 +1,186 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+
+{% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+<style>
+    .bbx{
+        margin-left: 97px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body id="body" class="dark-sidebar">
+
+    <br>
+    <br>
+    <br>
+ 
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+         <div class="bbx">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">ADD PRODUCT</button>
+
+         </div>
+      
+           <div class="d-flex align-items-center justify-content-center ">
+            <div class="col-lg-10 d-flex ">
+
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-tile">Checkout Items</h4>
+
+                        <div class="mess">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-info alert-dissmisable">
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0 table-centered">
+                                <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>Medicine Name</th>
+                                    <td>Batch No</td> 
+                                    <th>Quantity </th>
+                                    <th>Total Price </th>
+                                    <th class="">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for item in  items %}
+                                   <tr>
+                                    <td>{{item.medicine_stock.medicine.medicine_id}}</td>
+                                    <td>{{item.medicine_stock.medicine.medicine_name}}</td>
+                                    <td>{{item.medicine_stock.batch_no}}</td> 
+                                    <td>{{item.quantity}} * {{item.medicine_stock.medicine.wholesale_price}}</td> 
+                                        <td>{{item.get_wholesale}} Tsh</td> 
+                                    <td class="">
+                                        <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="id" value="{{item.id}}">
+                                <div class=""> 
+
+                                  <button class="btn" href="" name="delete" type="submit"> <i class="bi bi-trash fa-2x text-danger"></i></button>
+                                </div>
+                            </form>                             
+                            </td>
+                                </tr>
+                                {% endfor %}
+                             
+                              
+                                
+                                </tbody>
+                            </table><!--end /table-->
+                        </div><!--end /tableresponsive-->
+                    </div><!--end card-body-->
+                    
+                </div><!--end card-->
+            </div> <!-- end col -->
+           </div>
+           <form action="" method="post">
+           <div class="bbx">
+         
+                {% csrf_token %}
+            <button  name="confirm" type="submit" class="btn btn-primary" >CONFIRM PAYMENT</button>
+     
+         </div>
+        </form>
+        </div> <!-- end row--->
+
+    </div></div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addCostomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addSupplier">Add New Costomer</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+{{sale_form}}                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button name="costomerx" type="submit" class="btn btn-primary"> </button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+
+
+
+    
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addProduct">Add New Costomer</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label class="mb-3">Medicine Name</label>
+                            
+                            <select name="med_id" id="default" value="{{product.id}}">
+                                
+                                {% for product in products %}
+                                <option  value="{{product.id}}">{{product.medicine.medicine_name}} {{ product.batch_no}}</option>
+                          
+                                {% endfor %}
+                            </select>   
+                           <br>
+                           <label for="quantity">Quantity</label>
+                           <input type="number" name="quantity" id="quantity" class="form-control">
+                            <div class="d-flex align-items-center justify-content-center">
+    <button name="add" type="submit" class="btn btn-primary">SUBMIT</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+    {% endblock %}
+
+   
+
+    

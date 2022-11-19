@@ -1,0 +1,6 @@
+medicine_name,quantity_instock,buying_price,selling_price,manufacture_date,entry_date,expire_date,medicine_id,quantity,batch_no
+Aceclofenac 100mg - Tablets,10,3000,30000,3/4/2021,9/9/2022,4/4/2025,10173,34,464784
+Acetylsalicylic Acid/Soluble Asprin/Ascard 75mg - Tablets(ascard),10,2200,22000,3/5/2021,9/10/2022,4/5/2025,10550,100,456t78
+Amlodipine/Lofral/Lowvasc 10mg - Tablets(lofral),20,19500,390000,3/6/2021,9/11/2022,4/6/2025,21437,20,et6567
+Amoxycillin + Clavulanic Acid 228.6mg/5mL - Bottle,20,3850,77000,3/7/2021,9/12/2022,4/7/2025,92721,8,56543
+,,,,,,,,,47843

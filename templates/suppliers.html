@@ -1,0 +1,125 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+
+{% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+<style>
+    .bbx{
+        margin-left: 97px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body id="body" class="dark-sidebar">
+
+    <br>
+    <br>
+    <br>
+ 
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+         <div class="bbx">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplier">ADD SUPPLIER</button>
+
+         </div>
+      
+           <div class="d-flex align-items-center justify-content-center ">
+            <div class="col-lg-10 d-flex ">
+
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Suppliers</h4>
+
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0 table-centered">
+                                <thead>
+                                <tr>
+                                    <th>Supplier ID</th>
+                                    <th>Name</th>
+                                    <th>Phone </th>
+                                    <th>Added Date</th>
+                                    <th>Amount Paid</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for supplier in  suppliers_list %}
+                                   <tr>
+                                    <td>{{supplier.supplier_id}}</td>
+                                    <td>{{supplier.name}}</td>
+                                    <td>{{supplier.phone}}</td> 
+                                    <td>{{supplier.created_date | date }} </td>
+                                        <td>6766555 Tsh</td> 
+                                    <td class="">
+                                <div class=""> 
+                                    <i class="bi bi-trash fa-2x text-danger"></i>
+                                   <a href="{% url 'edit_supplier' supplier.supplier_id %} "><i class="bi bi-pencil fa-2x text-info"></i></a> 
+                                </div>
+                                                                    </td>
+                                </tr>
+                                {% endfor %}
+                             
+                              
+                                
+                                </tbody>
+                            </table><!--end /table-->
+                        </div><!--end /tableresponsive-->
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!-- end col -->
+           </div>
+        </div> <!-- end row--->
+
+    </div></div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addSupplier">Add New Supplier</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+{{form}}                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button name="add" type="submit" class="btn btn-primary">SUBMIT</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+
+
+
+    
+    {% endblock %}
+
+

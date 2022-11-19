@@ -1,0 +1,210 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+  <!-- jQuery -->
+  < src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></>
+script
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+  <style>
+    bbx{
+        margin-left: e;
+        padding-bottom: 10px;
+    }
+</style>
+<script>
+    $(function () {
+      $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+  </script>
+<body id="body" class="dark-sidebar">
+
+    <br>
+    <br>
+    <br>
+ 
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+  
+        <div class="page-content-tab">
+
+<div class="filter-box">
+    <form action="" method="GET" class=" d-flex form-inline justify-content-center">
+        <div class="col-md-2 p-1">
+            {{ filter.form.costomer.label_tag }}
+            {% render_field filter.form.costomer class="form-control " %}
+        </div>
+        <div class="col-md-2 p-1">
+            {{ filter.form.sold_by.label_tag }}
+            {% render_field filter.form.sold_by class="form-control " %}
+        </div>
+        <div class="col-md-2 p-1">
+            {{ filter.form.date.label_tag }}
+            {% render_field filter.form.date class="form-control " %}
+        </div>
+        <div class="col-md-2 p-1">
+            {{ filter.form.start_date.label_tag }}
+            {% render_field filter.form.start_date class="form-control " %}
+        </div>
+        <div class="col-md-2 p-1">
+            {{ filter.form.end_date.label_tag }}
+            {% render_field filter.form.end_date class="form-control " %}
+        </div>
+       
+        <div class="col-md-2 mt-4">
+        <button class="btn btn-primary" >FILTER</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+             {% if messages %}
+                        
+             {% for message in messages %}
+             <div class="alert alert-info alert-dismissible">
+                     {{message}}
+                 </div>
+             {% endfor %}
+                 
+             {% endif %}
+           <div class=" col-md-12 d-flex align-items-center justify-content-center ">
+            
+            <div class="col-lg-12 d-flex ">
+
+                <div class="card col-md-12">
+                    <div class="card-header">
+                        <h4 class="card-title">Users</h4>
+
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0 table-centered">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Costomer</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for sale in  sales_list %}
+                                   <tr>
+                                    <td>{{sale.sale_id}}</td>
+                                    <td>{{sale.costomer.name}}</td>
+                                </td>
+                              
+
+                                    <td>{{sale.get_total_money | intcomma}} Tsh</td>
+                                    <td>{{sale.sold_date | date}}</td> 
+                                  
+        
+        <form action="" method="POST"> 
+            {% csrf_token %}
+            <input type="hidden" name="sale_id" value="{{sale.sale_id}}">
+            <td class="">
+                                <div class=""> 
+                                    {% if sale.is_wholesale == True%}
+                                    <buttxon class="btn btn-info" type="submit" name="deletebtn"><a class="text-white" href="{% url 'invoice' sale.sale_id %}">INVOICE</a></buttxon>
+                                   {% endif %}
+                                    <buttxon class="btn btn-danger" type="submit" name="deletebtn">DELETE</buttxon>
+
+                                </div>
+                                
+                            </td>
+                            </form>
+                                                                 
+                                                               
+                                
+                                                                </tr>
+
+
+                                {% endfor %}
+                             
+                              
+                                
+                                </tbody>
+                            </table><!--end /table-->
+                        </div><!--end /tableresponsive-->
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!-- end col -->
+           </div>
+        </div> <!-- end row--->
+
+    </div></div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addUser">Add New User</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form class="my-4" action="" method="POST">   
+                            {% csrf_token %}         
+                            <div class="form-group mb-2">
+                                <input name="phone" placeholder="Phone Number" required type="text" class="form-control" id="username" >                               
+                            </div><!--end form-group--> 
+                            <div class="form-group mb-2">
+                                <input name="full_name" placeholder="Full Name" required type="text" class="form-control" id="username" >                               
+                            </div><!--end form-group--> 
+                            <div class="form-group">
+                                <input name="password" placeholder="Password" required type="password" class="form-control" >                            
+                            </div><!--end form-group--> 
+<br>
+                            <div class="form-group">
+                                <select name="role" id="" class="form-select" required>
+                                    <option >Select Role..</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Cashier</option>
+                                </select>
+<br>
+                            </div><!--end form-group--> 
+
+         
+                            <div class="form-group mb-0 row">
+                                <div class="col-12">
+                                    <div class="d-grid mt-3">
+                                        <buttxon name="adduser" type="submit" class="btn btn-primary" type="button">SUBMIT</buttxon>
+                                    </div>
+                                </div><!--end col--> 
+                            </div> <!--end form-group-->                           
+                        </form><!--end form-->
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+
+
+
+
+    
+    {% endblock %}
+
+

@@ -1,0 +1,128 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+
+{% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+<style>
+    .bbx{
+        margin-left: 97px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body id="body" class="dark-sidebar">
+
+    <br>
+    <br>
+    <br>
+ 
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+         <div class="bbx">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStock">ADD NEW STOCK</button>
+
+         </div>
+      
+           <div class="d-flex align-items-center justify-content-center ">
+            <div class="col-lg-10 d-flex ">
+
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Stocks</h4>
+
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0 table-centered">
+                                <thead>
+                                <tr>
+                                    <th>Stock ID</th>
+                                    <th>Stock Name</th>
+                                    <th>Entry Date</th>
+                                    <th>Total Price</th>
+                                    <th>PRODUCTS</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for stock in  stock_list %}
+                                   <tr>
+                                    <td>{{stock.stock_id}}</td>
+                                    <td>{{stock.stock_name}}</td>
+                                    <td>{{stock.entry_date}}</td> 
+                                    <td>{{stock.get_total_price | intcomma }} Tsh</td>
+                                    <td>
+                                        <button class="btn btn-success  "> <a class="text-white" href="{% url 'stock_products' stock.stock_id %}">ADD</a> </button>
+                                    </td>
+                                    <td class="">
+                                <div class=""> 
+                                    <i class="bi bi-trash fa-2x text-danger"></i>
+                                    <i class="bi bi-pencil fa-2x text-info"></i>
+                                </div>
+                                                                    </td>
+                                </tr>
+                                {% endfor %}
+                             
+                              
+                                
+                                </tbody>
+                            </table><!--end /table-->
+                        </div><!--end /tableresponsive-->
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!-- end col -->
+           </div>
+        </div> <!-- end row--->
+
+    </div></div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addStock" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addStock">Add New Stock</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+{{form}}                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button type="submit" class="btn btn-primary">SUBMIT</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+
+
+
+
+    
+    {% endblock %}
+
+

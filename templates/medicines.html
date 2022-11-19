@@ -1,0 +1,184 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+
+https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css
+https://code.jquery.com/jquery-3.5.1.js
+https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js
+
+<style>
+    .mybg{
+        background-color: #007542;
+    }
+</style>
+
+<body id="body" class="dark-sidebar">
+
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+<br>
+{{form.errors}}
+<br>
+<br>      
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#medicineModel"> ADD MEDICINE</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">UPLOAD EXCEL</button>
+<br>
+<br>
+
+
+<form action="" method="get" class=" d-flex form-inline justify-content-center">
+<div class="col-md-3 p-1">
+    {{ filter.form.medicine_name.label_tag }}
+    {% render_field filter.form.medicine_name class="form-control " %}
+</div>
+<div class="col-md-3 p-1">
+    {{ filter.form.medicine_id.label_tag }}
+    {% render_field filter.form.medicine_id class="form-control " %}
+</div>
+<div class="col-md-3 p-1">
+    {{ filter.form.quantity_instock.label_tag }}
+    {% render_field filter.form.quantity_instock class="form-control " %}
+</div>
+
+<div class="col-md-3 mt-4">
+<button class="btn btn-primary">FILTER</button>
+</div>
+
+</form>
+
+
+
+
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Medicines List</h4>
+            
+        </div><!--end card-header-->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                    <tr>
+                        <th>CODE</th>
+                        <th>Name</th>
+                        <th>In Sock</th>
+                        <th>Retail Price</th>
+                        <th>Wholesale Price</th>
+
+                        {% if request.user.is_superuser == True%}
+                        <th class="text-end">Action</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for medicine in medicine_list%}
+                    
+                    <tr>
+                        <td>{{medicine.medicine_id}}</td>
+                        <td>{{medicine.medicine_name}}</td>
+                        <td>{{medicine.quantity_instock}}</td>
+                        <td>{{medicine.retail_price}} Tsh</td>
+                        <td>{{medicine.wholesale_price}} Tsh</td>
+
+                           {% if request.user.is_superuser == True%}
+                        <form action="" method="post">
+                        <td class="text-end">   
+                            
+                             
+                                {% csrf_token %}
+                               
+                                <input type="hidden" name="medicineid" value="{{medicine.medicine_id}}">
+                            
+                            <div class="d-flex justify-content-center align-content-center">
+                                <button class="btn btn-danger"  type="submit" name="delete_medicine" ><i class="bi bi-trash"></i></>
+                                </form>
+                            <button class="btn btn-info"><a href="{% url 'edit_medicine' medicine.medicine_id %}"><i class="bi bi-pencil"></i></a></button>
+                        </div>
+                        </td>
+                    
+
+                        {% endif %}
+                    </tr>
+                   {% endfor %}
+                    </tbody>
+                </table><!--end /table-->
+            </div><!--end /tableresponsive-->
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div> <!-- end col -->
+
+
+    </div>
+    </div>
+
+
+    <div class="modal fade" id="medicineModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="medicineModel">Upload Exel File Here</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                           {{form}}
+                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button type="submit" name="addmedicine" class="btn btn-primary"> SAVE</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->
+
+
+
+    <div class="modal fade" id="exampleModalPrimary" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="exampleModalPrimary">Upload Exel File Here</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" name="myfile" class="form-control" id="">
+                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button type="submit" class="btn btn-primary"> ADD</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->
+    {% endblock %}
+
+

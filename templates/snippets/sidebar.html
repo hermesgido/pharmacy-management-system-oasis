@@ -1,0 +1,81 @@
+        {% load static %}
+        <style>
+            .mybgg{
+                background-color: #007542;
+            }
+        </style>
+        <!-- leftbar-tab-menu -->
+        <div  class="left-sidebar text-white">
+            <!-- LOGO -->
+            <div class="brand ">
+                <a href=" {% url 'home' %}" class="logo">
+                    <h2>  <img width="60" class="bg-white" src="{% static 'assets/images/logos/profile.png' %}" class="profile"/>
+                 <span class="text-white"> O A S I S
+                </span>
+                 </h2>
+                </a>
+            </div>
+           
+            <div class="border-end">
+                <ul class="nav nav-tabs menu-tab nav-justified" role="tablist">
+                    <li class="nav-item">
+                        
+                        <a class="nav-link active" data-bs-toggle="tab" href="#Main" role="tab" aria-selected="true"> <span><i class="bi bi-menu-button fa-1x p-2"></i></span>  M<span>enu</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#Extra" role="tab" aria-selected="false"></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Tab panes -->
+    
+            <!--end logo-->
+            <div class="menu-content h-100" data-simplebar text-white>
+                <div class="menu-body navbar-vertical">
+                    <div class="collapse navbar-collapse tab-content" id="sidebarCollapse">
+                        <!-- Navigation -->
+                        <ul class="navbar-nav tab-pane active" id="Main" role="tabpanel">
+                            {% if request.user.is_superuser %}
+                            <li class="nav-item">
+                               
+                                <a class="nav-link" href="{% url 'stock' %}"><i class="bi bi-bag-plus fa-2x p-2 text-white"></i><span>New Stock</span></a>
+                            </li><!--end nav-item-->
+                           {% endif %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%  url 'sales' %}"><i class="bi bi-coin fa-2x p-2 text-white"></i><span>Sales</span></a>
+                            </li><!--end nav-item-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'medicines' %}"><i class="bi bi-capsule fa-2x p-2 text-white"></i><span>Medicines Stock</span></a>
+                            </li><!--end nav-item-->
+                            {% if request.user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'users' %}"><i class="bi bi-person-circle fa-2x p-2 text-white"></i><span>Users</span></a>
+                            </li><!--end nav-item-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'suppliers' %}"><i class="bi bi-truck fa-2x p-2 text-white"></i><span>Suppliers</span></a>
+                            </li><!--end nav-item-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'settings' %}"><i class="bi bi-gear fa-2x p-2 text-white"></i><span>Setting</span></a>
+                            </li><!--end nav-item-->
+                            {% endif %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'costomers' %}"><i class="bi bi-person-video2 fa-2x p-2 text-white"></i><span>Costomers</span></a>
+                            </li><!--end nav-item-->
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout_user' %}"><i class="bi bi-box-arrow-left fa-2x p-2 text-white"></i><span>Logout</span></a>
+                            </li><!--end nav-item-->
+
+                           
+
+
+                        </ul>
+
+                    </div><!--end sidebarCollapse-->
+                </div>
+            </div>    
+        </div>
+        <!-- end left-sidenav-->
+        <!-- end leftbar-menu-->

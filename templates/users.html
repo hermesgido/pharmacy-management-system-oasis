@@ -1,0 +1,176 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+
+{% load humanize %}
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+<style>
+    .bbx{
+        margin-left: 97px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body id="body" class="dark-sidebar">
+
+    <br>
+    <br>
+    <br>
+ 
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+  
+        <div class="page-content-tab">
+            <div class="bbx col-md-8 d-flex align-items-center justify-content-center ">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">ADD USER</button>
+    
+             </div>
+             {% if messages %}
+                        
+             {% for message in messages %}
+             <div class="alert alert-info alert-dismissible">
+                     {{message}}
+                 </div>
+             {% endfor %}
+                 
+             {% endif %}
+           <div class="d-flex align-items-center justify-content-center ">
+            
+            <div class="col-lg-10 d-flex ">
+
+                
+               
+                    
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Users</h4>
+
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0 table-centered">
+                                <thead>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Registered Date</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for user in  users_list %}
+                                   <tr>
+                                    <td>{{user.phone}}</td>
+                                    <td>{{user.full_name}}</td>
+                                    <td>{{user.date_joined | date}}</td> 
+                                    
+                                    {% if user.is_superuser%}
+                                    <td>Admin</td>
+                                    {% else %}
+                                    <td>Cashier</td>
+                                    {% endif %}
+                                    <td>
+                 {{user.last_login | timesince}}      
+        </td>
+        <td class="">
+        <form action="" method="POST"> 
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{user.phone}}">
+                                    
+                                <div class=""> 
+                                    <button class="btn btn-danger" type="submit" name="deletebtn">DELETE</button>
+
+                                </div> </form>
+                                                                    </td>
+                                                               
+                                
+                                                                </tr>
+
+
+                                {% endfor %}
+                             
+                              
+                                
+                                </tbody>
+                            </table><!--end /table-->
+                        </div><!--end /tableresponsive-->
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!-- end col -->
+           </div>
+        </div> <!-- end row--->
+
+    </div></div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="addUser">Add New User</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form class="my-4" action="" method="POST">   
+                            {% csrf_token %}         
+                            <div class="form-group mb-2">
+                                <input name="phone" placeholder="Phone Number" required type="text" class="form-control" id="username" >                               
+                            </div><!--end form-group--> 
+                            <div class="form-group mb-2">
+                                <input name="full_name" placeholder="Full Name" required type="text" class="form-control" id="username" >                               
+                            </div><!--end form-group--> 
+                            <div class="form-group">
+                                <input name="password" placeholder="Password" required type="password" class="form-control" >                            
+                            </div><!--end form-group--> 
+<br>
+                            <div class="form-group">
+                                <select name="role" id="" class="form-select" required>
+                                    <option >Select Role..</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Cashier</option>
+                                </select>
+<br>
+                            </div><!--end form-group--> 
+
+         
+                            <div class="form-group mb-0 row">
+                                <div class="col-12">
+                                    <div class="d-grid mt-3">
+                                        <button name="adduser" type="submit" class="btn btn-primary" type="button">SUBMIT</button>
+                                    </div>
+                                </div><!--end col--> 
+                            </div> <!--end form-group-->                           
+                        </form><!--end form-->
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+
+
+
+
+    
+    {% endblock %}
+
+

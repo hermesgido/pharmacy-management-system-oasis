@@ -1,0 +1,197 @@
+       {% load static %}
+       
+       <style>
+        .cno{
+        
+        }
+       </style>
+       <!-- Top Bar Start -->
+        <!-- Top Bar Start -->
+        <div class="topbar"> 
+
+            <!-- Navbar -->
+            <nav class="navbar-custom" id="navbar-custom">    
+                <ul class="list-unstyled topbar-nav float-end mb-0">
+                
+                    <button type="button" class="btn btn-primary p-2 m-2 iconClass" data-bs-toggle="modal" data-bs-target="#aboutExpire">
+                        <i class="bi bi-calendar-x-fill"></i>
+                        <span class="badge badge-danger text-danger">2</span>
+                  </button>
+<br>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
+                
+                            <h6 class="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
+                                Out Of Stock <span class="badge bg-soft-primary badge-pill">3</span>
+                            </h6> 
+                            <div class="notification-menu" data-simplebar>
+
+
+                                
+                                    
+                             
+                                <!-- item-->
+                                <a href="#" class="dropdown-item py-3">
+                                    <small class="float-end text-muted ps-2">2 min ago</small>
+                                    <div class="media">
+                                
+                                        <div class="media-body align-self-center ms-2 text-truncate">
+                                            <h6 class="my-0 fw-normal text-dark">Your order is placed</h6>
+                                            <small class="text-muted mb-0">Dummy text of the printing and industry.</small>
+                                        </div><!--end media-body-->
+                                    </div><!--end media-->
+                                </a><!--end-item-->
+                                <!-- item-->
+                             
+                     
+                               
+                            </div>
+                            <!-- All-->
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
+                                View all <i class="fi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="dropdown notification-list">
+                        <button type="button" class="btn btn-primary iconClass" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge badge-danger text-danger">2</span>
+                          </button>
+
+                        <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
+                
+                            <h6 class="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
+                                Out Of Stock <span class="badge bg-soft-primary badge-pill">Quantity</span>
+                            </h6> 
+                                {% for med in medicines %}
+              {% if med.is_out_of_stock %}
+              
+             
+                                <!-- item-->
+                                <a href="#" class="dropdown-item py-3">
+                                    <h6 class="float-end  ps-2 text-danger">{{med.quantity_instock}}</h6>
+                                    <div class="media">
+
+                                        <div class="media-body align-self-center ms-2 text-truncate">
+                                            <h6 class="my-0 fw-normal text-danger">{{med.medicine_name}}</h6>
+                                            <small class="text-muted mb-0"></small>
+                                        </div><!--end media-body-->
+                                    </div><!--end media-->
+                                </a><!--end-item-->
+                                <!-- item-->
+                          
+                                {% endif %}
+                                {% endfor %}
+
+                         
+                        </div>
+                    </li>
+
+                    <li class="notification-list">
+                        <a class="nav-link arrow-none nav-icon offcanvas-btn" href="#" data-bs-toggle="offcanvas" data-bs-target="#Appearance" role="button" aria-controls="Rightbar">
+                            <i class="ti ti-settings ti-spin"></i>
+                        </a>
+                    </li>   
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">                        
+                    <li>
+                        <button class="nav-link button-menu-mobile nav-icon" id="togglemenu">
+                            <i class="ti ti-menu-2"></i>
+                        </button>
+                    </li> 
+                    <li class="hide-phone app-search">
+                        <form role="search" action="#" method="get">
+                            <input type="search" name="search" class="form-control top-search mb-0" placeholder="Type text...">
+                            <button type="submit"><i class="ti ti-search"></i></button>
+                        </form>
+                    </li>                       
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+        <!-- Top Bar End -->
+
+
+
+
+        <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title  text-danger fs-5" id="exampleModalLabel">Out Of Stock</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Remained</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for med in medicines %}
+                    {% if med.is_out_of_stock %}
+                  <tr>
+                    <th scope="row text-dark">{{med.medicine_name | truncatewords:5}}</th>
+                    <td class="text-danger">{{med.quantity_instock}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="aboutExpire" tabindex="-1" aria-labelledby="aboutExpire" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title  text-danger fs-5" id="aboutExpire">About To Expire</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Batch No</th>
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for med in expire_medicines %}
+                        
+                        {% if med.about_to_expire %}
+        
+                            
+                      <tr>
+                        <th scope="row text-dark">{{med.medicine.medicine_name | truncatewords:5}}</th>
+                        <td class="text-danger">{{med.batch_no}}</td>
+                      </tr>
+                      {% endif %}
+                      {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>

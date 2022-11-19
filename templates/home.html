@@ -1,0 +1,237 @@
+{% extends 'snippets/base.html' %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+   
+{% include "snippets/sidebar.html" %}
+{% include "snippets/topbar.html" %}
+
+<style>
+    .btx{
+        margin-top: 36px;
+    }
+</style>
+
+
+<body id="body" class="dark-sidebar">
+
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+<br> {% if request.user.is_superuser %}
+
+
+            <div class="row">
+                <h6>Logged in As: {{request.user.full_name}}</h6>
+
+                <div class="col-md-4">
+
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="media">
+                                <div class="media-body align-self-center"> 
+                                    <div class="coin-bal">                                                        
+                                        <h4 class="mt-0 mb-1 font-22 fw-bold">{{today_sales_amt}} Tsh</h4>
+                                        <p class="text-muted mb-0 fw-semibold">Today Sales
+                                            <span class="text-success">2.5% <i class="mdi mdi-arrow-up"></i></span>
+                                        </p>
+                                    </div>                                                                                              
+                                </div><!--end media body-->
+                            </div><!--end media-->
+                        </div><!--end card-body--> 
+                    </div><!--end card-->
+                </div><!--end col-->     
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="media">
+                                <div class="media-body align-self-center"> 
+                                    <div class="coin-bal">                                                        
+                                        <h4 class="mt-0 mb-1 font-22 fw-bold">{{this_month_sales_amt}} Tsh</h4>
+                                        <p class="text-muted mb-0 fw-semibold">This Month Sales
+                                            <span class="text-success">1.2% <i class="mdi mdi-arrow-up"></i></span>
+                                        </p>
+                                    </div>                                                                                              
+                                </div><!--end media body-->
+                            </div><!--end media-->
+                        </div><!--end card-body--> 
+                    </div><!--end card-->
+                </div><!--end col-->       
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="media">
+                                <div class="media-body align-self-center"> 
+                                    <div class="coin-bal">                                                        
+                                        <h4 class="mt-0 mb-1 font-22 fw-bold">{{this_year_sales_amt}} Tsh</h4>
+                                        <p class="text-muted mb-0 fw-semibold">Year Sales
+                                            <span class="text-success">0.5% <i class="mdi mdi-arrow-up"></i></span>
+                                        </p>
+                                    </div>                                                                                              
+                                </div><!--end media body-->
+                            </div><!--end media-->
+                        </div><!--end card-body--> 
+                    </div><!--end card-->
+                </div><!--end col-->                                          
+            </div><!--end row-->
+
+            {% else %}
+         
+        <br>
+
+        <div class="row">
+            <h6>Logged in As: {{request.user.full_name}}</h6>
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="card-body"> 
+                        <div class="media">
+                            <div class="media-body align-self-center"> 
+                                <div class="coin-bal">                                                        
+                                    <h4 class="mt-0 mb-1 font-22 fw-bold">Total Medicines</h4>
+                                    <p class="text-muted mb-0 fw-semibold">{{medicine_count}}
+                                    </p>
+                                </div>                                                                                              
+                            </div><!--end media body-->
+                        </div><!--end media-->
+                    </div><!--end card-body--> 
+                </div><!--end card-->
+            </div><!--end col-->     
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body"> 
+                        <div class="media">
+                            <div class="media-body align-self-center"> 
+                                <div class="coin-bal">                                                        
+                                    <h4 class="mt-0 mb-1 font-22 fw-bold">Out Of Stock</h4>
+                                    <p class="text-muted mb-0 fw-semibold">{{out_of_stock}}
+                                    </p>
+                                </div>                                                                                              
+                            </div><!--end media body-->
+                        </div><!--end media-->
+                    </div><!--end card-body--> 
+                </div><!--end card-->
+            </div><!--end col-->       
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body"> 
+                        <div class="media">
+                            <div class="media-body align-self-center"> 
+                                <div class="coin-bal">                                                        
+                                    <h4 class="mt-0 mb-1 font-22 fw-bold">Expired</h4>
+                                    <p class="text-muted mb-0 fw-semibold">{{expire_medicines.about_to_expire | length}}
+                                    </p>
+                                </div>                                                                                              
+                            </div><!--end media body-->
+                        </div><!--end media-->
+                    </div><!--end card-body--> 
+                </div><!--end card-->
+            </div><!--end col-->                                          
+        </div><!--end row-->
+
+        {% endif %}
+                        <!-- end page title end breadcrumb -->
+                   
+                                <div class="card-body">
+                                        <button type="button" class="btn btn-primary"><a class="text-white" href="{% url 'checkout_wholesale' %} ">WHOLESALE</a></button>
+                                        <button type="button" class="btn btn-primary"><a class="text-white" href="{% url 'checkout_retail' %} ">RETAIL</a></button>
+                                    
+
+                                </div><!-- end card-body --> 
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Medicines In Stock</h4>
+                            </div><!--end card-header-->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="datatable_2">
+                                        <thead class="thead-light">
+                                          <tr>
+                                            <th>Medicine Name</th>
+                                            <th>Quantity</th>
+
+                                            
+                                            {% if request.user.is_superuser == True %}
+                                            <th>Buying Price</th>
+                                            {% endif %}
+                                                
+                                            
+                                            <th>Wholesale Price</th>
+                                            <th>Retail Price</th>
+                                            <th>Expire Date</th>
+                                            <th>Manufacture Date</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for medicine in medicine_list %}
+                                            <tr>
+                                                <td>{{medicine.medicine.medicine_name}}</td>
+                                                <td>{{medicine.in_stock_now}}</td>
+                                                {% if request.user.is_superuser == True %}
+                                                <td>{{medicine.buying_price | intcomma}}</td>
+                                                {% endif %}
+                                                <td>{{medicine.medicine.wholesale_price | intcomma}} Tsh</td>
+                                                <td>{{medicine.medicine.retail_price | intcomma}} Tsh</td>
+
+                                                <td>{{medicine.expire_date}}</td>
+                                                <td>{{medicine.manufacture_date}}</td>
+                                            </tr>
+                                            
+                                            {% endfor %}                                                                      
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-de-primary csv">Export CSV</button>
+                                    <button type="button" class="btn btn-sm btn-de-primary txt">Export TXT</button>
+                                   {% comment %}  <button type="button" class="btn btn-sm btn-de-primary sql">Export SQL</button>
+                
+                                    <button type="button" class="btn btn-sm btn-de-primary json">Export JSON</button>
+                                 {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+
+    </div>
+    <!-- end page-wrapper -->
+
+
+
+
+
+    <div class="modal fade" id="exampleModalPrimary" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Upload Exel File Here</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <br>
+                        <form action="POST" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="file-upload" class="form-control" id="">
+                            <br>
+                            <div class="d-flex align-items-center justify-content-center">
+    <button type="submit" class="btn btn-primary"> UPLOAD EXEL</button>
+</div>
+                        
+                        </form>
+                      
+                    </div><!--end row-->                                                    
+                </div><!--end modal-body-->
+               
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div><!--end modal-->   
+    {% endblock %}
+
+
